@@ -1,0 +1,117 @@
+#%RAML 0.8
+title: hx19
+version: 1.0.0
+#baseUri: http://hexamite.cloudhub.io/hx19
+baseUri: https://mocksvc.mulesoft.com/mocks/148f1a74-a5ac-4ee8-a01a-50c99a9c05ea/hx19
+
+/message/{serverName}:
+  description: Send `message` to HX19 `device`(s) through a serial server on `host`. No error is reported if no serial server is running on host.
+  post:
+    body:
+      application/json:
+        schema: |
+          {
+            "type": "object",
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "id": "http://jsonschema.net",
+            "required": true,
+            "properties": {
+              "message": {
+                "type": "string",
+                "required": true
+              }
+            }
+          }
+        example: |
+          {
+            "message": "R19&b [R19:^70]"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              {
+                "type": "object",
+                "$schema": "http://json-schema.org/draft-03/schema",
+                "id": "http://jsonschema.net",
+                "required": true,
+                "properties": {
+                  "response": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            example: |
+              {
+                "response": "R19:X40 C6650 U40 | X40 C6655 U40 | X40 C6652 U40 | X40 C6659 U40 | X40"
+              }
+/monitor/{serverName}:
+  description: Log input from serial port on `host`. No error is reported if no serial server is running on `host`.
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              {
+                "type": "object",
+                "$schema": "http://json-schema.org/draft-03/schema",
+                "id": "http://jsonschema.net",
+                "required": true,
+                "properties": {
+                  "response": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            example: |
+              {
+                "response": "R19:X40 C6650 U40 | X40 C6655 U40 | X40 C6652 U40 | X40 C6659 U40 | X40"
+              }
+      
+/upload/{serverName}:
+  description: Upload file through a serial server on `host` into HX19 devices. File needs to be converted to Base64
+  post:
+    body:
+      application/json:
+        schema: |
+          {
+            "type": "object",
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "id": "http://jsonschema.net",
+            "required": true,
+            "properties": {
+              "file": {
+                "type": "string",
+                "required": true
+              }
+            }
+          }
+        example: |
+          {
+            "message": "dGVzdCB2b29yIGhleGFtaXRl"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              {
+                "type": "object",
+                "$schema": "http://json-schema.org/draft-03/schema",
+                "id": "http://jsonschema.net",
+                "required": true,
+                "properties": {
+                  "response": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            example: |
+              {
+                "response": "Upload OK"
+              }
